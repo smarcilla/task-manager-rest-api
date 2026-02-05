@@ -1,3 +1,11 @@
 /node_modules
 
 /curl_testing
+
+
+/coverage/
+/coverage/**
+lcov.info
+coverage-final.json
+/.nyc_output/
+/.nyc_output/**
