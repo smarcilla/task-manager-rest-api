@@ -1,0 +1,11 @@
+# Ignorar salida de cobertura
+coverage/
+
+# Dependencias y build
+node_modules/
+dist/
+build/
+
+# Archivos lock / binarios
+pnpm-lock.yaml
+*.min.js
