@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { ASSIGNED_STATUS, COMPLETED_STATUS } from '../shared/constants';
+
 const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: [true, 'title is required'], trim: true },
@@ -11,8 +13,8 @@ const taskSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['assigned', 'completed'],
-      default: 'assigned',
+      enum: [ASSIGNED_STATUS, COMPLETED_STATUS],
+      default: ASSIGNED_STATUS,
     },
   },
   {

@@ -1,12 +1,14 @@
 import { z } from 'zod';
 
+import { ASSIGNED_STATUS, COMPLETED_STATUS } from '../../shared/constants';
+
 export const listTaskQuerySchema = z.object({
   title: z
     .string()
     .min(3, { message: 'title search term must be at least 3 characters long' })
     .optional(),
   assignee: z.string().optional(),
-  status: z.enum(['assigned', 'completed']).optional(),
+  status: z.enum([ASSIGNED_STATUS, COMPLETED_STATUS]).optional(),
   page: z
     .string()
     .regex(/^\d+$/, { message: 'page must be a positive integer' })

@@ -2,6 +2,8 @@ import request from 'supertest';
 import app from '../../src/app';
 import { connect, clear, close } from '../setup';
 
+import { ASSIGNED_STATUS } from '../../src/shared/constants';
+
 import {
   EXPIRED_TOKEN,
   VALID_TOKEN,
@@ -37,14 +39,14 @@ describe('GET /tasks', () => {
     await request(app)
       .post('/tasks')
       .send(newTask1)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     await request(app)
       .post('/tasks')
       .send(newTask2)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     const response = await request(app)
       .get('/tasks')
@@ -58,7 +60,7 @@ describe('GET /tasks', () => {
     expect(response.body[0].title).toBe(newTask1.title);
     expect(response.body[0].description).toBe(newTask1.description);
     expect(response.body[0].assignee).toBe(newTask1.assignee);
-    expect(response.body[0].status).toBe('assigned');
+    expect(response.body[0].status).toBe(ASSIGNED_STATUS);
   });
 
   it('should return an empty array if there are no tasks', async () => {
@@ -88,14 +90,14 @@ describe('GET /tasks', () => {
     await request(app)
       .post('/tasks')
       .send(newTask1)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     await request(app)
       .post('/tasks')
       .send(newTask2)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     const response = await request(app)
       .get('/tasks?assignee=John Doe')
@@ -124,14 +126,14 @@ describe('GET /tasks', () => {
     await request(app)
       .post('/tasks')
       .send(newTask1)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     await request(app)
       .post('/tasks')
       .send(newTask2)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     const response = await request(app)
       .get('/tasks?status=assigned')
@@ -142,7 +144,7 @@ describe('GET /tasks', () => {
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBe(2);
     //TODO: completar este test cuando el endpoint marcar como completada esta implementado
-    expect(response.body[0].status).toBe('assigned');
+    expect(response.body[0].status).toBe(ASSIGNED_STATUS);
   });
 
   it('should not filter by status if the status is invalid', async () => {
@@ -161,14 +163,14 @@ describe('GET /tasks', () => {
     await request(app)
       .post('/tasks')
       .send(newTask1)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     await request(app)
       .post('/tasks')
       .send(newTask2)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     const response = await request(app)
       .get('/tasks?status=in_progress')
@@ -198,14 +200,14 @@ describe('GET /tasks', () => {
     await request(app)
       .post('/tasks')
       .send(newTask1)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     await request(app)
       .post('/tasks')
       .send(newTask2)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     const response = await request(app)
       .get('/tasks?title=John')
@@ -234,14 +236,14 @@ describe('GET /tasks', () => {
     await request(app)
       .post('/tasks')
       .send(newTask1)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     await request(app)
       .post('/tasks')
       .send(newTask2)
-      .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     const response = await request(app)
       .get('/tasks?title=Jo')
@@ -264,8 +266,8 @@ describe('GET /tasks', () => {
           description: `This is task number ${i}`,
           assignee: `User ${i}`,
         })
-        .set('Accept', 'application/json');
-      //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${VALID_TOKEN}`);
     }
 
     const response = await request(app)
@@ -289,8 +291,8 @@ describe('GET /tasks', () => {
           description: `This is task number ${i}`,
           assignee: `User ${i}`,
         })
-        .set('Accept', 'application/json');
-      //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${VALID_TOKEN}`);
     }
 
     const response = await request(app)
@@ -312,8 +314,8 @@ describe('GET /tasks', () => {
           description: `This is task number ${i}`,
           assignee: `User ${i}`,
         })
-        .set('Accept', 'application/json');
-      //.set('Authorization', `Bearer ${VALID_TOKEN}`);
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${VALID_TOKEN}`);
     }
 
     const response = await request(app)
@@ -330,7 +332,6 @@ describe('GET /tasks', () => {
     const response = await request(app)
       .get('/tasks')
       .set('Accept', 'application/json');
-    //.set('Authorization', `Bearer ${VALID_TOKEN}`);
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty('message');

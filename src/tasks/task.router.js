@@ -1,6 +1,6 @@
 import express from 'express';
 
-import taskHandler from './task.handler';
+import createTaskHandler from './handlers/create.task.handler';
 import listTaskHandler from './handlers/list.task.handler';
 import { createTaskSchema } from './task.schema';
 import listTaskSchema from './schemas/list.task.schema';
@@ -9,7 +9,12 @@ import authMiddleware from '../shared/auth/auth.middleware';
 
 const taskRouter = express.Router();
 
-taskRouter.post('/', validateRequest(createTaskSchema), taskHandler);
+taskRouter.post(
+  '/',
+  authMiddleware,
+  validateRequest(createTaskSchema),
+  createTaskHandler
+);
 taskRouter.get(
   '/',
   authMiddleware,
