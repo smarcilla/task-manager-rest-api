@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken';
 import { AppError } from '../shared/errors/error.handler';
 
 import { findUserByEmail } from './user.repository';
+
+import { generateToken } from '../shared/auth/token.generator';
 
 export const loginHandler = async (req, res) => {
   const { email, password } = req.body;
@@ -18,9 +19,7 @@ export const loginHandler = async (req, res) => {
     throw new AppError('AuthError', 401, [{ message: 'invalid credentials' }]);
   }
 
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '1h',
-  });
+  const token = generateToken({ id: user.id, email });
 
   res.status(200).json({ token });
 };
