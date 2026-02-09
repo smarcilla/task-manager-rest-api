@@ -9,3 +9,4 @@ lcov.info
 coverage-final.json
 /.nyc_output/
 /.nyc_output/**
+.env

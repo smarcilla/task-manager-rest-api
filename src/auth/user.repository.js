@@ -6,3 +6,7 @@ export const registerUser = async (userData) => {
   const savedUser = await user.save();
   return savedUser.toJSON();
 };
+
+export const findUserByEmail = async (email) => {
+  return await User.findOne({ email });
+};
