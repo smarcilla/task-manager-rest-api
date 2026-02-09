@@ -14,7 +14,7 @@ const createTaskHandler = async (req, res) => {
 
   const savedTask = await createTask(newTask);
 
-  res.status(201).json({ ...savedTask, id: savedTask._id });
+  res.status(201).json(savedTask);
 };
 
 export default createTaskHandler;

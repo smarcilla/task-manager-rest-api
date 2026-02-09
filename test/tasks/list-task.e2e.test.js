@@ -56,7 +56,7 @@ describe('GET /tasks', () => {
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBe(2);
-    expect(response.body[0]).toHaveProperty('_id');
+    expect(response.body[0]).toHaveProperty('id');
     expect(response.body[0].title).toBe(newTask1.title);
     expect(response.body[0].description).toBe(newTask1.description);
     expect(response.body[0].assignee).toBe(newTask1.assignee);

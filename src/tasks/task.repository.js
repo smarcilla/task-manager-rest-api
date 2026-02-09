@@ -1,10 +1,35 @@
 import Task from './task.model.js';
 
+import { mapTask, mapTasks } from './task.mapper.js';
+import { AppError } from '../shared/errors/error.handler.js';
+
 export const createTask = async (taskData) => {
   const task = new Task(taskData);
   const savedTask = await task.save();
 
-  return savedTask.toJSON();
+  return mapTask(savedTask);
+};
+
+export const updateTask = async (taskId, updateData, filter = {}) => {
+  const updatedTask = await Task.findOneAndUpdate(
+    { _id: taskId, ...filter },
+    updateData,
+    { new: true }
+  ).lean();
+
+  if (updatedTask) return mapTask(updatedTask);
+
+  const existing = await Task.findById(taskId).lean();
+  if (!existing) {
+    throw new AppError('Task not found', 404, [
+      { message: `Task ${taskId} not found` },
+    ]);
+  }
+
+  // Existe pero no cumple el filtro -> precondición fallida
+  throw new AppError(`Task is already completed`, 400, [
+    { message: `Task ${taskId} is already completed` },
+  ]);
 };
 
 export const findTasks = async (query) => {
@@ -24,5 +49,5 @@ export const findTasks = async (query) => {
     .limit(limitNum)
     .lean()
     .exec();
-  return tasks;
+  return mapTasks(tasks);
 };
