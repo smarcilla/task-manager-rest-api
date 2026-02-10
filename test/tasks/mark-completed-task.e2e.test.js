@@ -104,39 +104,33 @@ describe('PATCH /tasks/:id/complete', () => {
     );
   });
 
-  it('should return 401 when trying to mark a task as completed without a valid token', async () => {
-    const newTask = {
-      title: 'Test Task without valid token',
-      description:
-        'This task will be marked as completed without a valid token',
-      assignee: 'John Smith',
-    };
-
-    const createResponse = await request(app)
-      .post('/tasks')
-      .send(newTask)
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${VALID_TOKEN}`);
-
-    expect(createResponse.status).toBe(201);
-    const taskId = createResponse.body.id;
-
-    const responseNoToken = await request(app).patch(
-      `/tasks/${taskId}/complete`
+  it('should return 401 when trying to mark a task as completed without authentication', async () => {
+    const response = await request(app).patch(
+      `/tasks/${NOT_FOUND_ID}/complete`
     );
 
-    expect(responseNoToken.status).toBe(401);
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty('errors');
+    expect(response.body).toHaveProperty('message', 'authentication required');
+  });
 
-    const responseExpiredToken = await request(app)
-      .patch(`/tasks/${taskId}/complete`)
-      .set('Authorization', `Bearer ${EXPIRED_TOKEN}`);
-
-    expect(responseExpiredToken.status).toBe(401);
-
-    const responseInvalidToken = await request(app)
-      .patch(`/tasks/${taskId}/complete`)
+  it('should return 401 when trying to mark a task as completed with an invalid token', async () => {
+    const response = await request(app)
+      .patch(`/tasks/${NOT_FOUND_ID}/complete`)
       .set('Authorization', `Bearer ${INVALID_TOKEN}`);
 
-    expect(responseInvalidToken.status).toBe(401);
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty('errors');
+    expect(response.body).toHaveProperty('message', 'invalid token');
+  });
+
+  it('should return 401 when trying to mark a task as completed with an expired token', async () => {
+    const response = await request(app)
+      .patch(`/tasks/${NOT_FOUND_ID}/complete`)
+      .set('Authorization', `Bearer ${EXPIRED_TOKEN}`);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty('errors');
+    expect(response.body).toHaveProperty('message', 'token expired');
   });
 });

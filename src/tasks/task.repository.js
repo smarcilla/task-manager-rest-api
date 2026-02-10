@@ -26,10 +26,18 @@ export const updateTask = async (taskId, updateData, filter = {}) => {
     ]);
   }
 
-  // Existe pero no cumple el filtro -> precondición fallida
   throw new AppError(`Task is already completed`, 400, [
     { message: `Task ${taskId} is already completed` },
   ]);
+};
+
+export const deleteTask = async (taskId) => {
+  const deleted = await Task.findByIdAndDelete(taskId).lean();
+  if (!deleted) {
+    throw new AppError('Task not found', 404, [
+      { message: `Task ${taskId} not found` },
+    ]);
+  }
 };
 
 export const findTasks = async (query) => {
