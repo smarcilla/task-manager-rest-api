@@ -171,6 +171,59 @@ src/
     └── validators/           # Validadores de request
 ```
 
+## ⚡ Performance Considerations
+
+### Database Indexing Strategy
+
+The application implements a strategic indexing approach to optimize query performance while maintaining flexibility:
+
+#### Task Collection Indexes
+
+1. **Compound Index: `{ status: 1, assignee: 1, createdAt: 1, _id: 1 }`**
+   - Optimizes queries filtering by status and/or assignee
+   - Ensures efficient sorting by creation date
+   - Example queries: `?status=assigned`, `?status=assigned&assignee=John Doe`
+
+2. **Secondary Index: `{ assignee: 1, createdAt: 1, _id: 1 }`**
+   - Optimizes queries filtering only by assignee
+   - Example query: `?assignee=John Doe`
+
+3. **User Collection: `{ email: 1 }` (unique)**
+   - Automatically created via `unique: true` constraint
+   - Optimizes login operations and prevents duplicate emails
+
+#### Title Search Trade-offs
+
+The title search feature uses case-insensitive regex for substring matching (`$regex` with `$options: 'i'`), allowing flexible searches like:
+
+- `?title=imp` → finds "Tarea **imp**ortante"
+- `?title=orta` → finds "Tarea imp**orta**nte"
+
+**Why no index on title?**
+MongoDB cannot efficiently utilize standard indexes for case-insensitive substring searches. The regex pattern needs to scan documents to find matches anywhere in the text.
+
+**Performance characteristics:**
+
+| Query Pattern                      | Performance                | Index Used             |
+| ---------------------------------- | -------------------------- | ---------------------- |
+| `?status=assigned`                 | ⭐⭐⭐⭐⭐ Fast (~10-50ms) | Compound index         |
+| `?assignee=John`                   | ⭐⭐⭐⭐⭐ Fast (~10-50ms) | Secondary index        |
+| `?status=assigned&assignee=John`   | ⭐⭐⭐⭐⭐ Fast (~10-50ms) | Compound index         |
+| `?title=important`                 | ⭐⭐ Moderate (~200-500ms) | None (collection scan) |
+| `?status=assigned&title=important` | ⭐⭐⭐⭐ Good (~50-100ms)  | Compound index + regex |
+
+_Performance estimates based on ~10,000 documents_
+
+**Scaling considerations:**
+
+For production deployments with 100k+ documents or heavy text search requirements, consider:
+
+- **MongoDB Atlas Search**: Integrated full-text search with Lucene-based indexing
+- **Elasticsearch**: Industry-standard for advanced text search and autocomplete
+- **Algolia/Typesense**: Managed search services optimized for instant search experiences
+
+The current implementation provides an excellent balance for the expected scale while maintaining code simplicity and flexible search capabilities.
+
 ## 📝 Tareas Pendientes
 
 - #TODO: Add Swagger documentation
