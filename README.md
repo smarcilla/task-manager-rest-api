@@ -1,36 +1,36 @@
 # Task Manager REST API
 
-API RESTful para gestión de tareas con autenticación JWT, construida con Node.js, Express y MongoDB.
+RESTful API for task management with JWT authentication, built with Node.js, Express and MongoDB.
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
-- **Node.js** (v25.6.0) - Entorno de ejecución
-- **Express** (v5.2.1) - Framework web
-- **MongoDB** (v8.0) + **Mongoose** - Base de datos NoSQL
-- **JWT** (jsonwebtoken) - Autenticación y autorización
-- **bcrypt** - Hash de contraseñas
-- **Zod** - Validación de esquemas
-- **Jest** + **Supertest** - Testing E2E
-- **Docker** + **Docker Compose** - Contenedorización
-- **ESLint** + **Prettier** - Linting y formateo de código
-- **pnpm** - Gestor de paquetes
+- **Node.js** (v25.6.0) - Runtime environment
+- **Express** (v5.2.1) - Web framework
+- **MongoDB** (v8.0) + **Mongoose** - NoSQL database
+- **JWT** (jsonwebtoken) - Authentication and authorization
+- **bcrypt** - Password hashing
+- **Zod** - Schema validation
+- **Jest** + **Supertest** - E2E testing
+- **Docker** + **Docker Compose** - Containerization
+- **ESLint** + **Prettier** - Code linting and formatting
+- **pnpm** - Package manager
 
-## 📋 Prerequisitos
+## 📋 Prerequisites
 
-- **Docker** y **Docker Compose** instalados
-- **pnpm** (opcional, solo si quieres ejecutar la aplicación localmente sin Docker)
+- **Docker** and **Docker Compose** installed
+- **pnpm** (optional, only if you want to run the application locally without Docker)
 
-## 🚀 Levantar la Aplicación con Docker
+## 🚀 Start the Application with Docker
 
-### 1. Configurar Variables de Entorno
+### 1. Configure Environment Variables
 
-Crea un archivo `.env` en la raíz del proyecto basándote en el archivo `.env.example`:
+Create a `.env` file in the project root based on the `.env.example` file:
 
 ```bash
 cp .env.example .env
 ```
 
-Edita el archivo `.env` con tus valores:
+Edit the `.env` file with your values:
 
 ```env
 # JWT Configuration
@@ -42,133 +42,156 @@ MONGO_USER=admin
 MONGO_PASS=password_seguro_123
 MONGO_DB=task_manager
 
-# API Configuration (opcional)
+# API Configuration (optional)
 API_PORT=3000
 ```
 
-> **Nota:** Para generar un `JWT_SECRET` seguro, puedes usar:
+> **Note:** To generate a secure `JWT_SECRET`, you can use:
 >
 > ```bash
 > openssl rand -base64 32
 > ```
 
-### 2. Iniciar la Aplicación
+### 2. Start the Application
 
 ```bash
-# Construir y levantar los contenedores
+# Build and start the containers
 pnpm run docker:up
 
-# O usando Docker Compose directamente
+# Or using Docker Compose directly
 docker compose up --build -d
 ```
 
-La API estará disponible en `http://localhost:3000`
+The API will be available at `http://localhost:3000`
 
-### 3. Ver Logs
+### 3. View Logs
 
 ```bash
-# Ver logs de la API
+# View API logs
 pnpm run docker:logs
 
-# O usando Docker directamente
+# Or using Docker directly
 docker compose logs -f api
 ```
 
-### 4. Detener la Aplicación
+### 4. Stop the Application
 
 ```bash
-# Detener los contenedores
+# Stop the containers
 pnpm run docker:down
 
-# O usando Docker directamente
+# Or using Docker directly
 docker compose down
 ```
 
-## 🧪 Ejecutar Tests
+## 🧪 Run Tests
 
-Los tests utilizan **Jest** con **mongodb-memory-server** (base de datos en memoria) para pruebas E2E.
+Tests use **Jest** with **mongodb-memory-server** (in-memory database) for E2E testing.
 
-### Ejecutar todos los tests E2E
+### Run all E2E tests
 
 ```bash
 pnpm run test:e2e
 ```
 
-### Ejecutar tests unitarios (cuando estén disponibles)
+### Run unit tests (when available)
+
+```bash
+pnpm run test:unit
+```
+
+### Run all tests
 
 ```bash
 pnpm run test
 ```
 
-### Ejecutar todos los tests
+### View code coverage
 
-```bash
-pnpm run test:all
-```
+Tests automatically generate a coverage report in the `coverage/lcov-report/index.html` directory.
 
-### Ver cobertura de código
+## 📡 Available Endpoints
 
-Los tests generan automáticamente un reporte de cobertura en el directorio `coverage/lcov-report/index.html`.
+### Authentication
 
-## 📡 Endpoints Disponibles
+- `POST /register` - Register a new user
+- `POST /login` - Login and obtain JWT token
 
-### Autenticación
+### Tasks (require authentication)
 
-- `POST /register` - Registrar un nuevo usuario
-- `POST /login` - Iniciar sesión y obtener token JWT
+- `GET /tasks` - List tasks for the authenticated user
+- `POST /tasks` - Create a new task
+- `DELETE /tasks/:id` - Delete a task
+- `PATCH /tasks/:id/complete` - Mark task as completed
 
-### Tareas (requieren autenticación)
-
-- `GET /tasks` - Listar tareas del usuario autenticado
-- `POST /tasks` - Crear una nueva tarea
-- `DELETE /tasks/:id` - Eliminar una tarea
-- `PATCH /tasks/:id/complete` - Marcar tarea como completada
-
-> **Nota:** Todas las peticiones a `/tasks/*` requieren el header:
+> **Note:** All requests to `/tasks/*` require the header:
 >
 > ```
 > Authorization: Bearer <token>
 > ```
 
-## 🔐 Autenticación
+## � API Documentation
 
-El proyecto implementa autenticación basada en JWT (JSON Web Tokens):
+While Swagger documentation is not available, a comprehensive **Postman Collection** is included to test all API endpoints.
 
-- **Algoritmo:** HS256
-- **Librería:** `jsonwebtoken`
-- **Expiración:** Configurable vía `JWT_EXPIRES_IN` (por defecto: 1h)
-- **Hash de contraseñas:** bcrypt con salt rounds = 10
+### Using the Postman Collection
 
-La clave secreta JWT se genera mediante:
+1. **Import the collection** into Postman:
+   - File: `docs/task-manager-api.postman_collection.json`
+   - In Postman: File → Import → Select the JSON file
+
+2. **Collection features**:
+   - Pre-configured requests for all endpoints
+   - Automated tests for each endpoint
+   - Environment variables for tokens and IDs
+   - Complete authentication flow (register → login → authenticated requests)
+
+3. **Usage workflow**:
+   1. Run "Register Success" to create a test user
+   2. Run "Login Success" to obtain JWT token (automatically saved)
+   3. Test any task endpoint (token is auto-included)
+
+The collection includes tests for success cases, validation errors, authentication errors, and edge cases.
+
+## �🔐 Authentication
+
+The project implements JWT-based authentication (JSON Web Tokens):
+
+- **Algorithm:** HS256
+- **Library:** `jsonwebtoken`
+- **Expiration:** Configurable via `JWT_EXPIRES_IN` (default: 1h)
+- **Password hashing:** bcrypt with salt rounds = 10
+
+The JWT secret key is generated using:
 
 ```bash
 openssl rand -base64 32
 ```
 
-Y se almacena en la variable de entorno `JWT_SECRET`.
+And is stored in the `JWT_SECRET` environment variable.
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 src/
-├── app.js                    # Configuración de Express
-├── index.js                  # Punto de entrada
-├── auth/                     # Módulo de autenticación
+├── app.js                    # Express configuration
+├── index.js                  # Entry point
+├── auth/                     # Authentication module
 │   ├── login.handler.js
 │   ├── register.handler.js
 │   ├── user.model.js
 │   └── schemas/
-├── tasks/                    # Módulo de tareas
+├── tasks/                    # Tasks module
 │   ├── task.model.js
 │   ├── task.repository.js
 │   ├── task.router.js
 │   ├── handlers/
 │   └── schemas/
-└── shared/                   # Utilidades compartidas
-    ├── auth/                 # Middleware de autenticación
-    ├── db/                   # Cliente de MongoDB
-    ├── errors/               # Manejo de errores
-    └── validators/           # Validadores de request
+└── shared/                   # Shared utilities
+    ├── auth/                 # Authentication middleware
+    ├── db/                   # MongoDB client
+    ├── errors/               # Error handling
+    └── validators/           # Request validators
 ```
 
 ## ⚡ Performance Considerations
@@ -223,10 +246,5 @@ For production deployments with 100k+ documents or heavy text search requirement
 - **Algolia/Typesense**: Managed search services optimized for instant search experiences
 
 The current implementation provides an excellent balance for the expected scale while maintaining code simplicity and flexible search capabilities.
-
-## 📝 Tareas Pendientes
-
-- #TODO: Add Swagger documentation
-- #TODO: Add unit tests (determine where). We use the mutation testing library Stryker
 
 ---

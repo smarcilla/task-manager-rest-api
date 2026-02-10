@@ -13,9 +13,10 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "jest --testPathIgnorePatterns '\\.e2e\\.test\\.[jt]s?$'",
+    "test:unit": "jest --testPathIgnorePatterns '\\.e2e\\.test\\.[jt]s?$'",
     "test:e2e": "jest --testPathPatterns '\\.e2e\\.test\\.[jt]s?$' --runInBand",
-    "test:all": "pnpm run test && pnpm run test:e2e",
+    "test:coverage": "jest --coverage",
+    "test": "jest --coverage",
     "prepare": "husky"
   },
   "keywords": [],

@@ -1,4 +1,4 @@
-import { ZodError } from 'zod';
+import { formatMongooseValidation } from './error.formatter.js';
 
 export class AppError extends Error {
   constructor(message, statusCode, details = null) {
@@ -8,33 +8,12 @@ export class AppError extends Error {
   }
 }
 
-/* Helpers */
-const formatZod = (zErr) =>
-  zErr.errors.map((e) => ({
-    path: e.path.join('.') || '',
-    message: e.message,
-  }));
-
-const formatMongooseValidation = (err) =>
-  Object.values(err.errors || {}).map((e) => ({
-    path: e.path,
-    message: e.message || e.properties?.message,
-  }));
-
-const normalizeError = (err) => {
+export const normalizeError = (err) => {
   if (err instanceof AppError) {
     return {
       statusCode: err.statusCode,
       message: err.message,
       details: err.details,
-    };
-  }
-
-  if (err instanceof ZodError) {
-    return {
-      statusCode: 400,
-      message: 'Validation error',
-      details: formatZod(err),
     };
   }
 

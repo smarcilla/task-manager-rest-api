@@ -2,7 +2,7 @@ echo "Running pre-push checks..."
 
 # Unit tests
 # echo "Running unit tests..."
-# pnpm test || exit 1
+ pnpm test:unit || exit 1
 
 # Integration tests
 echo "Running integration tests..."

@@ -2,7 +2,6 @@
 
 /curl_testing
 
-
 /coverage/
 /coverage/**
 lcov.info
