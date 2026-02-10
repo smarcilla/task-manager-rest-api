@@ -1,12 +1,10 @@
 ### Tareas Pendientes
 
-//TODO: Integrar la app dentro de docker con docker-compose, incluyendo la base de datos MongoDB.
+//TODO: Add Swagger
 
-//TODO: Agregar Swagger
+//TODO: Document the README.md
 
-//TODO: Documentar el README.md
-
-//TODO: Añadir unit tests (ver donde). Usamos la libreria de mutation Stryker
+//TODO: Add unit tests (determine where). We use the mutation testing library Stryker
 
 ## Autenticación: JWT (implementación básica de login y registro)
 

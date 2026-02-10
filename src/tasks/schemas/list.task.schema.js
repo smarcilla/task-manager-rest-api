@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ASSIGNED_STATUS, COMPLETED_STATUS } from '../../shared/constants';
+import { ASSIGNED_STATUS, COMPLETED_STATUS } from '../../shared/constants.js';
 
 export const listTaskQuerySchema = z.object({
   title: z

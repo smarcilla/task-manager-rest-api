@@ -129,9 +129,14 @@ describe('GET /tasks', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
-    await request(app)
+    const task2Response = await request(app)
       .post('/tasks')
       .send(newTask2)
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${VALID_TOKEN}`);
+
+    await request(app)
+      .patch(`/tasks/${task2Response.body.id}/complete`)
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${VALID_TOKEN}`);
 
@@ -142,8 +147,7 @@ describe('GET /tasks', () => {
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
-    expect(response.body.length).toBe(2);
-    //TODO: completar este test cuando el endpoint marcar como completada esta implementado
+    expect(response.body.length).toBe(1);
     expect(response.body[0].status).toBe(ASSIGNED_STATUS);
   });
 

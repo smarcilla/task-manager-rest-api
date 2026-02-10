@@ -1,13 +1,13 @@
 import express from 'express';
 
-import createTaskHandler from './handlers/create.task.handler';
-import listTaskHandler from './handlers/list.task.handler';
-import markCompletedTaskHandler from './handlers/mark-completed.task.handler';
-import deleteTaskHandler from './handlers/delete.task.handler';
-import { createTaskSchema } from './task.schema';
-import listTaskSchema from './schemas/list.task.schema';
-import { validateRequest } from '../shared/validators/request.validator';
-import authMiddleware from '../shared/auth/auth.middleware';
+import createTaskHandler from './handlers/create.task.handler.js';
+import listTaskHandler from './handlers/list.task.handler.js';
+import markCompletedTaskHandler from './handlers/mark-completed.task.handler.js';
+import deleteTaskHandler from './handlers/delete.task.handler.js';
+import { createTaskSchema } from './task.schema.js';
+import listTaskSchema from './schemas/list.task.schema.js';
+import { validateRequest } from '../shared/validators/request.validator.js';
+import authMiddleware from '../shared/auth/auth.middleware.js';
 
 const taskRouter = express.Router();
 

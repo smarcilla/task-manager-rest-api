@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { AppError } from '../errors/error.handler';
+import { AppError } from '../errors/error.handler.js';
 
 const validateToken = (token) => {
   try {

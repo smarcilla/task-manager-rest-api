@@ -1,6 +1,6 @@
 import { createTask } from '../task.repository.js';
 
-import { ASSIGNED_STATUS } from '../../shared/constants';
+import { ASSIGNED_STATUS } from '../../shared/constants.js';
 
 const createTaskHandler = async (req, res) => {
   const { title, description, assignee } = req.body;

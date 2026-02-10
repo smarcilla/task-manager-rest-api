@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { ASSIGNED_STATUS, COMPLETED_STATUS } from '../shared/constants';
+import { ASSIGNED_STATUS, COMPLETED_STATUS } from '../shared/constants.js';
 
 const taskSchema = new mongoose.Schema(
   {

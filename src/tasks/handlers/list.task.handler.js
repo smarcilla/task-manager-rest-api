@@ -1,4 +1,4 @@
-import { findTasks } from '../task.repository';
+import { findTasks } from '../task.repository.js';
 
 const listTaskHandler = async (req, res) => {
   const query = req.query;

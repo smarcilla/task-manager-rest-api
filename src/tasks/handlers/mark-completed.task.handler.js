@@ -1,5 +1,5 @@
 import { updateTask } from '../task.repository.js';
-import { COMPLETED_STATUS } from '../../shared/constants';
+import { COMPLETED_STATUS } from '../../shared/constants.js';
 
 const markCompletedTaskHandler = async (req, res) => {
   const { id } = req.params;

@@ -1,4 +1,4 @@
-import { registerUser } from './user.repository';
+import { registerUser } from './user.repository.js';
 
 export const registerHandler = async (req, res) => {
   const { email } = req.body;

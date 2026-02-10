@@ -1,8 +1,8 @@
-import { AppError } from '../shared/errors/error.handler';
+import { AppError } from '../shared/errors/error.handler.js';
 
-import { findUserByEmail } from './user.repository';
+import { findUserByEmail } from './user.repository.js';
 
-import { generateToken } from '../shared/auth/token.generator';
+import { generateToken } from '../shared/auth/token.generator.js';
 
 export const loginHandler = async (req, res) => {
   const { email, password } = req.body;

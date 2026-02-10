@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { registerHandler } from './register.handler';
-import { loginHandler } from './login.handler';
-import { registerSchema } from './schemas/register.schema';
-import { loginSchema } from './schemas/login.schema';
-import { validateRequest } from '../shared/validators/request.validator';
+import { registerHandler } from './register.handler.js';
+import { loginHandler } from './login.handler.js';
+import { registerSchema } from './schemas/register.schema.js';
+import { loginSchema } from './schemas/login.schema.js';
+import { validateRequest } from '../shared/validators/request.validator.js';
 
 const authRouter = express.Router();
 

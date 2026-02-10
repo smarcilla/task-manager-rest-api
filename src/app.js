@@ -1,8 +1,8 @@
 import express from 'express';
 
-import taskRouter from './tasks/task.router';
-import authRouter from './auth/auth.router';
-import errorHandler from './shared/errors/error.handler';
+import taskRouter from './tasks/task.router.js';
+import authRouter from './auth/auth.router.js';
+import errorHandler from './shared/errors/error.handler.js';
 
 const app = express();
 
