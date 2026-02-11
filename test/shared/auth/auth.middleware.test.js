@@ -1,8 +1,8 @@
-import authMiddleware from './auth.middleware.js';
-import { AppError } from '../errors/error.handler.js';
-import { validateToken } from './token.validator.js';
+import authMiddleware from '../../../src/shared/auth/auth.middleware.js';
+import { AppError } from '../../../src/shared/errors/error.handler.js';
+import { validateToken } from '../../../src/shared/auth/token.validator.js';
 
-jest.mock('./token.validator.js');
+jest.mock('../../../src/shared/auth/token.validator.js');
 
 describe('authMiddleware', () => {
   let req, res, next;

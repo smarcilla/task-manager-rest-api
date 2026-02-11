@@ -4,7 +4,7 @@ import createTaskHandler from './handlers/create.task.handler.js';
 import listTaskHandler from './handlers/list.task.handler.js';
 import markCompletedTaskHandler from './handlers/mark-completed.task.handler.js';
 import deleteTaskHandler from './handlers/delete.task.handler.js';
-import { createTaskSchema } from './task.schema.js';
+import createTaskSchema from './schemas/create.task.schema.js';
 import listTaskSchema from './schemas/list.task.schema.js';
 import { validateRequest } from '../shared/validators/request.validator.js';
 import authMiddleware from '../shared/auth/auth.middleware.js';

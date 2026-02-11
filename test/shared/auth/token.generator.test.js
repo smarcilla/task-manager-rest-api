@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { generateToken } from './token.generator.js';
+import { generateToken } from '../../../src/shared/auth/token.generator.js';
 
 jest.mock('jsonwebtoken');
 

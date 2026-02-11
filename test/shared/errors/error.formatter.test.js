@@ -1,4 +1,4 @@
-import { formatMongooseValidation } from './error.formatter';
+import { formatMongooseValidation } from '../../../src/shared/errors/error.formatter';
 
 describe('formatMongooseValidation', () => {
   it('should format Mongoose validation errors with message property', () => {

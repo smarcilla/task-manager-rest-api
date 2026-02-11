@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-import { validateToken } from './token.validator.js';
-import { AppError } from '../errors/error.handler.js';
+import { validateToken } from '../../../src/shared/auth/token.validator.js';
+import { AppError } from '../../../src/shared/errors/error.handler.js';
 
 jest.mock('jsonwebtoken');
 

@@ -1,4 +1,4 @@
-import { mapUser } from './user.mapper.js';
+import { mapUser } from '../../src/auth/user.mapper.js';
 
 describe('mapUser', () => {
   it('should map user to userDTO', () => {

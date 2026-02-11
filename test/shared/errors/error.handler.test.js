@@ -1,4 +1,8 @@
-import { AppError, normalizeError, errorHandler } from './error.handler.js';
+import {
+  AppError,
+  normalizeError,
+  errorHandler,
+} from '../../../src/shared/errors/error.handler.js';
 
 describe('AppError', () => {
   it('should create an AppError with message and statusCode', () => {

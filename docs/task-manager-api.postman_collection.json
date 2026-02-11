@@ -47,7 +47,7 @@
       "name": "Health Check",
       "item": [
         {
-          "name": "GET / - Health Check",
+          "name": "GET /health - Health Check",
           "event": [
             {
               "listen": "test",
@@ -57,10 +57,10 @@
                   "    pm.response.to.have.status(200);",
                   "});",
                   "",
-                  "pm.test(\"Response has message property\", function () {",
+                  "pm.test(\"Response has status property\", function () {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.expect(jsonData).to.have.property('message');",
-                  "    pm.expect(jsonData.message).to.eql('Hello World!');",
+                  "    pm.expect(jsonData).to.have.property('status');",
+                  "    pm.expect(jsonData.status).to.eql('ok');",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -74,9 +74,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/",
+              "raw": "{{base_url}}/health",
               "host": ["{{base_url}}"],
-              "path": [""]
+              "path": ["health"]
             }
           }
         }

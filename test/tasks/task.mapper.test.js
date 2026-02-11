@@ -1,4 +1,4 @@
-import { mapTask, mapTasks } from './task.mapper.js';
+import { mapTask, mapTasks } from '../../src/tasks/task.mapper.js';
 
 describe('mapTask', () => {
   it('should map a valid task document', () => {
